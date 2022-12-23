@@ -7,7 +7,7 @@ app.use(express.json());
 const userModel = require("./models/details");
 
 const DB = 'mongodb+srv://abhay:abhay356@cluster0.7az8zhf.mongodb.net/?retryWrites=true&w=majority'
-
+// mongo atlas connection
 mongoose
   .connect(DB)
   .then(() => {
