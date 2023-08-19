@@ -1,13 +1,15 @@
 const express = require("express");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const app = express();
 app.use(express.json());
 // const Databaseconnection = require("./connector/db");
 const userModel = require("./models/details");
 
-const DB = 'mongodb+srv://abhay:abhay356@cluster0.7az8zhf.mongodb.net/?retryWrites=true&w=majority'
+const DB =
+  "mongodb+srv://abhay:abhay356@cluster0.7az8zhf.mongodb.net/?retryWrites=true&w=majority";
 // mongo atlas connection
+mongoose.set("strictQuery", false);
 mongoose
   .connect(DB)
   .then(() => {
@@ -46,10 +48,11 @@ app.get("/api/form", async (req, res) => {
 });
 
 //   update api
-app.put("/api/update/", async (req, res) => {
+app.put("/api/update", async (req, res) => {
   try {
     const { Name, Phone, Email, Hob, id } = req.body;
-    const Data = await userModel.findByIdAndUpdate(
+    console.log(id);
+    const Data = await userModel.findOneAndUpdate(
       { _id: id },
       { Name, Phone, Email, Hob },
       { new: true }
@@ -63,10 +66,10 @@ app.put("/api/update/", async (req, res) => {
 
 // delete api
 
-app.delete("/delete/:_id", async (req, res) => {
+app.delete("/api/delete/:id", async (req, res) => {
   try {
     const data = await userModel.findOneAndDelete({
-      name: req.params._id,
+      _id: req.params.id,
     });
     res.json({ success: true });
   } catch (error) {
